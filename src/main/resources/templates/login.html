@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<title>Login</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+</head>
+<body>
+<div class="container">
+	<h1>Login to see movieslist</h1>
+
+<!-- 	näytetään teksti jos erroria, eli on param error -->
+	<p th:if="${param.error}">Wrong user or password.</p>
+<!-- 	näytetään teksti kun logataan ulos, eli on param logout -->
+	<p th:if="${param.logout}">You have logged out.</p>
+	
+	<form th:action="@{/login}" method="post">
+		<div class="form-group"><label> User Name : <input type="text" name="username" class="form-control"/></label></div>
+		<div class="form-group"><label> Password: <input type="password" name="password" class="form-control"/></label></div>
+		<br>
+		<input type="submit" value="Login" class="btn btn-success"/>
+	</form>
+</div>
+</body>
+</html>
+</body>
+</html>

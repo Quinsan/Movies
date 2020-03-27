@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>Movie list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+</head>
+<body>
+<div class="container">
+	<div class="col-md-4">
+		<h1>All movies</h1>
+	</div>
+	<div class="col-md-4">
+		<h3 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h3>
+	</div>
+	<div class="col-md-4" style="padding:20px 0">	<!--   tämä hoitaa lougoutin -->
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out" class="btn btn-sm  btn-danger"/>
+        </form>
+    </div>
+    <table class="table table-striped">
+		<tr>
+		    <th>Title</th>
+		    <th>Director</th>
+		    <th>Year</th>
+		    <th>Rating</th>
+		    <th>Category</th>
+		    <th sec:authorize="hasAuthority('ADMIN')"></th>
+		</tr>  
+    	<tr th:each = "movie : ${movies}">
+    		<td th:text="${movie.title}"></td>
+    		<td th:text="${movie.director}"></td>
+    		<td th:text="${movie.year}"></td>
+    		<td th:text="${movie.rating}"></td>
+    		<td th:text="${movie.category.name}"></td>
+				<!--   tämä näytetään vain, jos käyttäjällä rooli ADMIN -->
+    		<td sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-danger" th:href="@{/delete/{id}(id=${movie.id})}">Delete</a></td>
+    	</tr>
+     </table>
+     <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-success" href="/addMovie">Add Movie</a>
+</div>    	
+</body>
+</html>
